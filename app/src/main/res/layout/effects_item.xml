@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_border_line_bottom"
+        >
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="144px"
+            android:layout_height="match_parent"
+            android:text="@string/user_name"
+            android:textSize="24px"
+            android:textColor="@color/dark_black"
+            android:singleLine="true"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tv_effect"
+            android:layout_width="278px"
+            android:layout_height="match_parent"
+            android:text="@string/effect"
+            android:textSize="24px"
+            android:textColor="@color/dark_black"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tv_user_add"
+            android:layout_width="412px"
+            android:layout_height="match_parent"
+            android:text="@string/address"
+            android:textSize="24px"
+            android:textColor="@color/dark_black"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="144px"
+            android:layout_height="match_parent"
+            android:text="@string/time"
+            android:textSize="24px"
+            android:textColor="@color/light_gray"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="128px"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="right|center_vertical">
+
+            <TextView
+                android:id="@+id/tv_goCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/goCheck"
+                android:textSize="24px"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_btn_blue"
+                android:paddingLeft="20px"
+                android:paddingRight="20px"
+                android:paddingTop="10px"
+                android:paddingBottom="10px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,349 @@
+[
+    {
+        "outputFile": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 1853,
+                    "endColumn": 63,
+                    "endOffset": 1912
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 1581,
+                        "endColumn": 63,
+                        "endOffset": 1640
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 1917,
+                    "endColumn": 63,
+                    "endOffset": 1976
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 1645,
+                        "endColumn": 63,
+                        "endOffset": 1704
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 1981,
+                    "endColumn": 54,
+                    "endOffset": 2031
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 1709,
+                        "endColumn": 54,
+                        "endOffset": 1759
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 2036,
+                    "endColumn": 56,
+                    "endOffset": 2088
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 1764,
+                        "endColumn": 56,
+                        "endOffset": 1816
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 2093,
+                    "endColumn": 54,
+                    "endOffset": 2143
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 1821,
+                        "endColumn": 54,
+                        "endOffset": 1871
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 2148,
+                    "endColumn": 74,
+                    "endOffset": 2218
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\exploded-aar\\com.android.support\\recyclerview-v7\\23.4.0\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 327,
+                        "endColumn": 74,
+                        "endOffset": 397
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 2223,
+                    "endColumn": 75,
+                    "endOffset": 2294
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\exploded-aar\\com.android.support\\recyclerview-v7\\23.4.0\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 402,
+                        "endColumn": 75,
+                        "endOffset": 473
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 2299,
+                    "endColumn": 71,
+                    "endOffset": 2366
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\exploded-aar\\com.android.support\\recyclerview-v7\\23.4.0\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 478,
+                        "endColumn": 71,
+                        "endOffset": 545
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 2371,
+                    "endColumn": 37,
+                    "endOffset": 2404
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 1876,
+                        "endColumn": 37,
+                        "endOffset": 1909
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 2409,
+                    "endColumn": 65,
+                    "endOffset": 2470
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\exploded-aar\\com.android.support\\recyclerview-v7\\23.4.0\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 550,
+                        "endColumn": 65,
+                        "endOffset": 611
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 2475,
+                    "endColumn": 39,
+                    "endOffset": 2510
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 1914,
+                        "endColumn": 39,
+                        "endOffset": 1949
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 2515,
+                    "endColumn": 36,
+                    "endOffset": 2547
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 1954,
+                        "endColumn": 36,
+                        "endOffset": 1986
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 2552,
+                    "endColumn": 101,
+                    "endOffset": 2649
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 1991,
+                        "endColumn": 101,
+                        "endOffset": 2088
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 17,
+                    "startColumn": 4,
+                    "startOffset": 2654,
+                    "endColumn": 113,
+                    "endOffset": 2763
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 2093,
+                        "endColumn": 113,
+                        "endOffset": 2202
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 18,
+                    "startColumn": 4,
+                    "startOffset": 2768,
+                    "endColumn": 107,
+                    "endOffset": 2871
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 2207,
+                        "endColumn": 107,
+                        "endOffset": 2310
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 19,
+                    "startColumn": 4,
+                    "startOffset": 2876,
+                    "endColumn": 71,
+                    "endOffset": 2943
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 2315,
+                        "endColumn": 71,
+                        "endOffset": 2382
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 20,
+                    "startColumn": 4,
+                    "startOffset": 2948,
+                    "endColumn": 69,
+                    "endOffset": 3013
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 2387,
+                        "endColumn": 69,
+                        "endOffset": 2452
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 21,
+                    "startColumn": 4,
+                    "startOffset": 3018,
+                    "endColumn": 77,
+                    "endOffset": 3091
+                },
+                "from": {
+                    "file": "D:\\soft\\soft\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 2457,
+                        "endColumn": 77,
+                        "endOffset": 2530
+                    }
+                }
+            }
+        ]
+    }
+]
