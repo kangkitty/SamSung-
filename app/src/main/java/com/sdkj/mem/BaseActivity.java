@@ -4,6 +4,7 @@ package com.sdkj.mem;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.view.Window;
 
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -13,7 +14,7 @@ import com.zhy.autolayout.AutoLayoutActivity;
  *
  * @author KittyKang
  */
-public abstract  class BaseActivity  extends AutoLayoutActivity {
+public abstract  class BaseActivity  extends FragmentActivity {
 
 
     /**
@@ -31,7 +32,7 @@ public abstract  class BaseActivity  extends AutoLayoutActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("请求网络中...");
+        dialog.setMessage("正在解析数据...");
         dialog.show();
     }
 

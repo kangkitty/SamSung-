@@ -9,19 +9,26 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Message;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -29,8 +36,12 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.sdkj.mem.BaseActivity;
 import com.sdkj.mem.R;
+import com.sdkj.mem.bean.CheckRecord;
+import com.sdkj.mem.utils.BitmapUtils;
 import com.sdkj.mem.utils.CameraCore;
 import com.sdkj.mem.utils.CameraProxy;
+import com.sdkj.mem.utils.Constant;
+import com.sdkj.mem.utils.FileSizeUtil;
 import com.sdkj.mem.utils.ToastUtil;
 import com.sdkj.mem.utils.ViewUtil;
 import com.sdkj.mem.wheelview.DateUtils;
@@ -57,6 +68,8 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
     private Context context;
 
     //显示View
+    private TextView mName,mPhone,mAddress,mEffect,mPXTime,mTestName,mTestResult,mCXName;
+    private EditText mPhoneModel,mPhonePart,mBZ;
 
     //待填写View
     private TextView mCXTime;//查修时间
@@ -66,6 +79,8 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
     private RadioGroup mRG;//完成单选按钮
     private RadioButton mWC,mWWC;
 
+    private TextView mSubmit;
+
     private WheelMain wheelMainDate;//日期时间滚轮选择
     private String beginTime;
 
@@ -73,6 +88,7 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
     private CameraProxy cameraProxy;
     private String fileDir = "";
     private String imageUri = "";
+    private String baseImg = "";
     /** SD卡根目录 */
     private final String externalStorageDirectory = Environment.getExternalStorageDirectory().getPath()+"/atest/picture/";
 
@@ -80,11 +96,15 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
 
+    //接收传递过来的数据
+    private CheckRecord record;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         this.context = this;
+        record = (CheckRecord) getIntent().getSerializableExtra("checkRecord");
         // imageLoader初始化
         imageLoader = ImageLoader.getInstance();
         if (!imageLoader.isInited()) {
@@ -104,37 +124,121 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
         }
         cameraProxy = new CameraProxy(this, DetailActivity.this);
         initViews();
+        initDatas();
         initEvents();
     }
 
     public void initViews(){
-        mCXTime = (TextView) findViewById(R.id.tv_cx_time);
         mPhoto = (ImageView) findViewById(R.id.iv_photo);
         mPhotoDel = findViewById(R.id.ll_photo_del);
         mRG = (RadioGroup) this.findViewById(R.id.jl_rg);
         mWC = (RadioButton) this.findViewById(R.id.wc_rb);
         mWWC = (RadioButton) this.findViewById(R.id.wwc_rb);
 
+        //显示View,与EditText
+        mName = (TextView) findViewById(R.id.tv_name);
+        mPhone = (TextView) findViewById(R.id.tv_phone);
+        mAddress = (TextView) findViewById(R.id.tv_address);
+        mEffect = (TextView) findViewById(R.id.tv_effect_info);
+        mPXTime = (TextView) findViewById(R.id.tv_px_time);
+        mTestName = (TextView) findViewById(R.id.tv_testName);
+        mTestResult = (TextView) findViewById(R.id.tv_testResult);
+        mCXName = (TextView) findViewById(R.id.tv_cx_user);
+        mSubmit = (TextView) findViewById(R.id.tv_submit);
+
+
+
+        mPhoneModel = (EditText) findViewById(R.id.et_hj_type);
+        mPhonePart = (EditText) findViewById(R.id.et_fxh);
+        mBZ = (EditText) findViewById(R.id.tv_cx_bz);
+    }
+
+    public void initDatas(){
+        if(!TextUtils.isEmpty(record.getUserName())){
+            mName.setText(record.getUserName());
+        }
+        if(!TextUtils.isEmpty(record.getUserTel())){
+            mPhone.setText(record.getUserTel());
+        }
+
+        if(!TextUtils.isEmpty(record.getPhoneMobile())){
+            mPhoneModel.setText(record.getPhoneMobile());
+        }
+
+        if(!TextUtils.isEmpty(record.getPhoneBox())){
+            mPhonePart.setText(record.getPhoneBox());
+        }
+
+        if(!TextUtils.isEmpty(record.getAddress())){
+            mAddress.setText(record.getAddress());
+        }
+
+        if(!TextUtils.isEmpty(record.getEffect())){
+            mEffect.setText(record.getEffect());
+        }
+
+        if(!TextUtils.isEmpty(record.getPxTime())){
+            mPXTime.setText(record.getPxTime());
+        }
+
+        if(!TextUtils.isEmpty(record.getFaultTestUserName())){
+            mTestName.setText(record.getFaultTestUserName());
+        }
+
+
+        if(!TextUtils.isEmpty(record.getFaultTestResult())){
+            mTestResult.setText(record.getFaultTestResult());
+        }
+
+        if(!TextUtils.isEmpty(record.getResult())){
+            mBZ.setText(record.getResult());
+        }
+
+        if(!TextUtils.isEmpty(record.getCxUserName())){
+            mCXName.setText(record.getCxUserName());
+        }
+
+        if(!TextUtils.isEmpty(record.getImgRes())){
+            baseImg = record.getImgRes();
+            Bitmap bitmap = BitmapUtils.base64ToBitmap(record.getImgRes());
+            mPhoto.setImageBitmap(bitmap);
+            ViewUtil.showCurrentView(mPhotoDel);
+
+        }
+
+        if(record.getState().equals("3")){
+         //未完成
+            mRG.check(mWWC.getId());
+        }else{
+            record.setState("1");
+        }
 
     }
 
     public void initEvents(){
-        mCXTime.setOnClickListener(mListener);
         mPhoto.setOnClickListener(mListener);
         mPhotoDel.setOnClickListener(mListener);
+        mSubmit.setOnClickListener(mListener);
 
         mRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == mWC.getId()){
                     ToastUtil.toast(context,mWC.getText().toString());
+                    record.setState("1");
 //                    seletedTv.setText(defaultStr + manRb.getText().toString());
                 }else if(checkedId == mWWC.getId()){
+                    record.setState("3");
                     ToastUtil.toast(context,mWWC.getText().toString());
-//                    seletedTv.setText(defaultStr + womanRb.getText().toString());
                 }
             }
         });
+
+        //为edittext添加监听
+        TextChange textChange=new TextChange();
+        mPhoneModel.addTextChangedListener(textChange);
+        mPhonePart.addTextChangedListener(textChange);
+        mBZ.addTextChangedListener(textChange);
     }
 
 
@@ -233,6 +337,7 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
                         public void run() {
                             imageUri = file2.getPath();
 //                            imageLoader.displayImage(imageUri,mPhoto,options);
+
                             ViewUtil.showCurrentView(mPhotoDel);
                             mPhoto.setImageBitmap(NativeUtil.getBitmapFromFile(file2.getPath()));
                         }
@@ -270,17 +375,29 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
         public void onClick(View v) {
                 Intent intent = null;
             switch (v.getId()){
-                case  R.id.tv_cx_time:
-                    //选择查修时间
-                    showBottoPopupWindow();
+//                case  R.id.tv_cx_time:
+//                    //选择查修时间
+//                    showBottoPopupWindow();
+//
+//                    break;
+                case R.id.tv_submit:
+                    //提交按钮
+                    if(mRG.getCheckedRadioButtonId() == mWC.getId()){
 
+                        NormalDialogStyleTwo();
+                    }else{
+                        gotoSubmit();
+                    }
                     break;
                 case R.id.iv_photo:
                     //点击拍照按钮
-                    if(!TextUtils.isEmpty(imageUri)){
+                    if(!TextUtils.isEmpty(imageUri) || !TextUtils.isEmpty(record.getImgRes())){
                         //在ImageShowActivity中显示图片
                         intent = new Intent(context,ImageShowActivity.class);
                         intent.putExtra("imageUri", imageUri);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("checkRecord", record);
+                        intent.putExtras(bundle);
                         startActivity(intent);
                     }else{
                         //拍照
@@ -292,9 +409,110 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
                     //删除拍照按钮
                     mPhoto.setImageResource(R.drawable.ic_no_photo);
                     imageUri = "";
+                    baseImg = "";
                     ViewUtil.goneCurrentView(mPhotoDel);
                     break;
             }
         }
     };
+
+
+    //EditText的监听器
+    class TextChange implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if(mPhoneModel.length()>0){
+                record.setPhoneMobile(mPhoneModel.getText().toString());
+
+            }
+
+            if(mPhonePart.length()>0){
+                record.setPhoneBox(mPhonePart.getText().toString());
+            }
+
+            if(mBZ.length()>0){
+                record.setResult(mBZ.getText().toString());
+            }
+
+
+        }
+    }
+
+
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+
+    public void setBasIn(BaseAnimatorSet bas_in) {
+        this.mBasIn = bas_in;
+    }
+
+    public void setBasOut(BaseAnimatorSet bas_out) {
+        this.mBasOut = bas_out;
+    }
+    private void NormalDialogStyleTwo() {
+        final NormalDialog dialog = new NormalDialog(context);
+        dialog.content("提交之后的记录不可更改")//
+                .style(NormalDialog.STYLE_TWO)//
+                .titleTextSize(23)//
+                .btnText("取消","确定")
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        //取消
+
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        //确定
+                        gotoSubmit();
+                        dialog.dismiss();
+                    }
+                });
+
+    }
+
+
+    //提交数据
+    public void gotoSubmit(){
+        showLoading();
+        if(!TextUtils.isEmpty(imageUri)){
+            record.setImgRes(BitmapUtils.bitmapToBase64(NativeUtil.getBitmapFromFile(imageUri)));
+        }else if(!TextUtils.isEmpty(baseImg)){
+            record.setImgRes(baseImg);
+        }
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String today = df.format(new Date());
+        record.setCxTime(today);
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(record);
+        boolean isOk =  FileSizeUtil.saveUserInfo(record, "wq.json");
+        if(isOk){
+            ToastUtil.toast(context,"数据提交成功");
+            Intent intent = new Intent();
+            setResult(Constant.RESPONSE_OK,intent);
+            finish();
+        }else{
+            dismissLoading();
+            ToastUtil.toast(context,"数据提交失败");
+        }
+    }
 }

@@ -2,6 +2,7 @@ package com.sdkj.mem.bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  *  维修记录单
  * @author KittyKang
  */
-public class CheckRecord {
+public class CheckRecord implements Serializable {
 
     private String taskid;
     @SerializedName("applyUserName")
@@ -23,12 +24,14 @@ public class CheckRecord {
     @SerializedName("applyTime")
     private String sbTime;
     @SerializedName("serviceRepairTime")
-    private String pxTime;
-    @SerializedName("serviceTime")
     private String cxTime;
+    @SerializedName("serviceTime")
+    private String pxTime;
     @SerializedName("serviceRepairState")
-    private int state;//订单状态 3 待办 2 未完成  1 完成
+    private String state;//订单状态 3 待办 2 未完成  1 完成
 
+    @SerializedName("serviceRepairResult")
+    private String result;
     @SerializedName("serviceRepairPhonePartBox")
     private String phoneBox;//分线盒
 
@@ -36,6 +39,7 @@ public class CheckRecord {
     private String phoneMobile;//话机型号
     @SerializedName("serviceCheckUserId")
     private String cxUserId;//查修人员id
+    @SerializedName("serviceUserId_name")
     private String cxUserName;//查修人员名字
     @SerializedName("serviceUserId")
     private String pxUserId;
@@ -104,11 +108,11 @@ public class CheckRecord {
         this.cxTime = cxTime;
     }
 
-    public int getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(String state) {
         this.state = state;
     }
 
@@ -192,5 +196,13 @@ public class CheckRecord {
 
     public void setFaultTestUserName(String faultTestUserName) {
         this.faultTestUserName = faultTestUserName;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }

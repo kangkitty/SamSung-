@@ -1,10 +1,10 @@
 package com.sdkj.mem.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -14,11 +14,15 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.polites.android.GestureImageView;
+import com.sdkj.mem.BaseActivity;
 import com.sdkj.mem.R;
+import com.sdkj.mem.bean.CheckRecord;
+import com.sdkj.mem.utils.BitmapUtils;
 
 import net.bither.util.NativeUtil;
 
-public class ImageShowActivity extends Activity
+
+public class ImageShowActivity extends BaseActivity
 {
 
 	private Context context;
@@ -30,6 +34,7 @@ public class ImageShowActivity extends Activity
 	private ImageLoader imageLoader;
 	private DisplayImageOptions options;
 	private String imageUri;
+	private String baseImg;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -47,9 +52,16 @@ public class ImageShowActivity extends Activity
 				.bitmapConfig(Bitmap.Config.RGB_565)
 				.displayer(new SimpleBitmapDisplayer()).build();//设置fadein会有闪烁效果
 		imageUri = getIntent().getStringExtra("imageUri");
+		CheckRecord record = (CheckRecord) getIntent().getSerializableExtra("checkRecord");
 		mGestureImageView = (GestureImageView) findViewById(R.id.image);
-		mGestureImageView.setImageBitmap(NativeUtil.getBitmapFromFile(imageUri));
-//		imageLoader.displayImage(imageUri,mGestureImageView,options);
+		if(!TextUtils.isEmpty(imageUri)){
+			mGestureImageView.setImageBitmap(NativeUtil.getBitmapFromFile(imageUri));
+		}else{
+
+			mGestureImageView.setImageBitmap(BitmapUtils.base64ToBitmap(record.getImgRes()));
+		}
+
+
 
 	}
 
@@ -64,4 +76,8 @@ public class ImageShowActivity extends Activity
 	}
 
 
+	@Override
+	public void handlerMessage(Message msg) {
+
+	}
 }

@@ -1,7 +1,9 @@
 package com.sdkj.mem.adapter;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,24 @@ public class NewsItemAdapter extends BaseAdapter
 	private LayoutInflater mInflater;
 	private List<CheckRecord> mDatas;
 	private Context context;
+
+	/**
+	 * 去维修事件监听器
+	 */
+	private OnItemSelectListener listener;
+	public void setOnItemSelectListener(OnItemSelectListener listener){
+		this.listener = listener;
+	}
+	/**
+	 * item监听事件
+	 *
+	 */
+	public interface OnItemSelectListener{
+		void onItemClick(View v, CheckRecord record);
+		void onItemCheck(View v, CheckRecord record);
+	}
+
+
 	/**
 	 * 使用了github开源的ImageLoad进行了数据加载
 	 */
@@ -70,6 +90,7 @@ public class NewsItemAdapter extends BaseAdapter
 		return position;
 	}
 
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
@@ -84,40 +105,60 @@ public class NewsItemAdapter extends BaseAdapter
 			holder.mAddress = (TextView) convertView.findViewById(R.id.tv_user_add);
 			holder.sbTime = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.goCheck = (TextView) convertView.findViewById(R.id.tv_goCheck);
+			holder.itemZone =  convertView.findViewById(R.id.ll_item_zone);
 
 			convertView.setTag(holder);
 		} else
 		{
 			holder = (ViewHolder) convertView.getTag();
 		}
-		CheckRecord record = mDatas.get(position);
+		final CheckRecord record = mDatas.get(position);
 		holder.mName.setText(record.getUserName());
 		holder.mEffect.setText(record.getEffect());
 		holder.mAddress.setText(record.getAddress());
+		holder.sbTime.setText(record.getSbTime());
 
-		holder.goCheck.setOnClickListener(new View.OnClickListener() {
+		if(record.getState().equals("1")){
+			//已完成
+			holder.goCheck.setText("已完成");
+			holder.goCheck.setBackground(context.getResources().getDrawable(R.drawable.bg_gray_normal));
+		}else if(record.getState().equals("3")){
+			//未完成
+			holder.goCheck.setText("未完成");
+			holder.goCheck.setBackground(context.getResources().getDrawable(R.drawable.bg_btn_blue));
+		}else{
+			holder.goCheck.setText("去维修");
+			holder.goCheck.setBackground(context.getResources().getDrawable(R.drawable.bg_btn_blue));
+		}
+		if(!record.getState().equals("1")) {
+			holder.goCheck.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+
+					if (listener != null) {
+						listener.onItemCheck(v, record);
+					}
+
+				}
+			});
+		}
+
+		holder.itemZone.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(context, DetailActivity.class);
-				context.startActivity(intent);
+				if (listener != null) {
+					listener.onItemClick(v, record);
+				}
 			}
 		});
-//		holder.mContent.setText(newsItem.getContent());
-//		holder.mDate.setText(newsItem.getDate());
-//		if (newsItem.getImgLink() != null)
-//		{
-//			holder.mImg.setVisibility(View.VISIBLE);
-//			imageLoader.displayImage(newsItem.getImgLink(), holder.mImg, options);
-//		} else
-//		{
-//			holder.mImg.setVisibility(View.GONE);
-//		}
+
 
 		return convertView;
 	}
 
 	private final class ViewHolder
 	{
+		View itemZone;
 		TextView mName,mEffect,mAddress;
 		TextView sbTime;
 		TextView goCheck;

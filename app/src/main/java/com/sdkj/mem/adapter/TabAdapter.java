@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import com.sdkj.mem.bean.CheckRecord;
 import com.sdkj.mem.fragment.MainFragment;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TabAdapter extends FragmentPagerAdapter
-{
+public class TabAdapter extends FragmentPagerAdapter implements Serializable {
 
 	private List<String> mDataList;
 	private List<CheckRecord> records;

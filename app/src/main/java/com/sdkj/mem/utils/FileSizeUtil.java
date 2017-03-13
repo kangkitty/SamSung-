@@ -18,6 +18,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.sdkj.mem.bean.CheckRecord;
 import com.sdkj.mem.bean.User;
 
 
@@ -196,7 +197,8 @@ public class FileSizeUtil implements FileFilter{
 	 } 
 	 
 	 
-    public static  synchronized void saveFile(boolean isRoot,String str,String fileName) {  
+    public static  synchronized boolean saveFile(boolean isRoot,String str,String fileName) {
+		boolean isOk = false;
         String filePath = null;  
         boolean hasSDCard = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);  
        // filePath = Constant.Data_PATH + File.separator + fileName;
@@ -214,10 +216,13 @@ public class FileSizeUtil implements FileFilter{
             }  
             FileOutputStream outStream = new FileOutputStream(file);  
             outStream.write(str.getBytes());  
-            outStream.close();  
+            outStream.close();
+			isOk = true;
         } catch (Exception e) {  
             e.printStackTrace();  
-        }  
+        }
+
+		return isOk;
     }
     
     //List文件
@@ -259,10 +264,11 @@ public class FileSizeUtil implements FileFilter{
     }
     
     //List文件
-    public static void saveUserInfo(User myuser,String fileName) {  
+    public static synchronized boolean saveUserInfo(CheckRecord myuser,String fileName) {
+		boolean isOk = false;
         String filePath = null;  
-        List<User> users = new ArrayList<User>();
-        filePath = Constant.Data_PATH + File.separator + fileName; 
+        List<CheckRecord> users = new ArrayList<CheckRecord>();
+        filePath = Constant.Data_PATH + fileName;
 //        boolean hasSDCard = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);  
 //        if (hasSDCard) {  
 //            filePath = Environment.getExternalStorageDirectory().toString() + File.separator + fileName;  
@@ -283,32 +289,35 @@ public class FileSizeUtil implements FileFilter{
             	if(!jsonString.equals("-1")){
             		
             		if(StringEmpty.isGoodJson(jsonString)){
-            	Type listType = new TypeToken<LinkedList<User>>() {
+            	Type listType = new TypeToken<LinkedList<CheckRecord>>() {
         		}.getType();
         		
-        		 LinkedList<User> fUsers = gson.fromJson(jsonString, listType);
+        		 LinkedList<CheckRecord> fUsers = gson.fromJson(jsonString, listType);
         		users.addAll(fUsers);
             		}
             	}
             } 
             if(users.size()>0){
-            	
+
             	for(int p=0;p<users.size();p++){
-            		User user = users.get(p);
-//            		if(user.getIdNo().equals(myuser.getIdNo())){
-//            			//用户存在
-//            			users.remove(user);
-//            		}
+					CheckRecord user = users.get(p);
+            		if(user.getTaskid().equals(myuser.getTaskid())){
+            			//用户存在
+            			users.remove(user);
+            		}
             	}
             }
             users.add(myuser);
             String str = gson.toJson(users);
             FileOutputStream outStream = new FileOutputStream(file);  
             outStream.write(str.getBytes());  
-            outStream.close();  
+            outStream.close();
+			isOk = true;
         } catch (Exception e) {  
             e.printStackTrace();  
-        }  
+        }
+
+		return isOk;
     }
     
     

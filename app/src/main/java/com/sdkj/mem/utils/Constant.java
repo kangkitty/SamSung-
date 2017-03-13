@@ -65,13 +65,17 @@ public class Constant {
 	
 	public static final String SD_PATH = "/mnt/sdcard";
 	public static final String USB_PATH = "/mnt/usbotg";
-	public static final String Data_PATH = Environment.getExternalStorageDirectory().toString()+"/exam";
+	public static final String Data_PATH = Environment.getExternalStorageDirectory().toString()+"/WQ/";
 	
 	//数据格式错误
 	public static final int IMPORT_DATA=0x8181;
 	public static final int CHECK_DARA = 0x8282;
 	public static final int DATA_OK = 0x8383;
-	
+
+
+	public static final int REQUEST_OK = 0x23;//是否刷新信息
+	public static final int RESPONSE_OK = 0x24;//
+
 	
 	//http://127.0.0.1:8080/schoolExam/api/exams?devices=123
 	//http://127.0.0.1:8080/schoolExam/api/imp?values=1
@@ -91,5 +95,11 @@ public class Constant {
 //	public static final String DOWN_EXAM = "http://192.168.0.189:8080/schoolExam/api/exams";
 //	//上传特征数据
 //	public static final String UP_EXAM = "http://192.168.0.189:8080/schoolExam/api/impExam";
+
+
+	public static final String NO_DATA = "请先导入任务数据";
+	public static final String DATA_ERROR = "数据解析出错，请核对数据文件";
+
+
 	
 }

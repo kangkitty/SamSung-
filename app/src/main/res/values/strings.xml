@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MemberManagement</string>
+    <string name="app_name">外勤系统</string>
     <string name="read">读取</string>
     <string name="management">信息化管理外勤系统</string>
     <string name="user_name">用户名称</string>

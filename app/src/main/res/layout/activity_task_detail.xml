@@ -96,12 +96,11 @@
                             android:gravity="center"
                             android:background="@drawable/bg_border_line_right"/>
                         <!--实体型号-->
-                        <EditText
+                        <TextView
                             android:id="@+id/et_hj_type"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="4"
-                            android:hint="@string/hint_text"
                             android:textColor="@color/light_black"
                             android:textSize="26px"
                             android:singleLine="true"
@@ -154,12 +153,11 @@
                             android:singleLine="true"
                             android:gravity="center"
                             android:background="@drawable/bg_border_line_right"/>
-                        <EditText
+                        <TextView
                             android:id="@+id/et_fxh"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="4"
-                            android:hint="@string/hint_text"
                             android:textColor="@color/light_black"
                             android:textSize="26px"
                             android:singleLine="true"
@@ -353,12 +351,11 @@
                         android:gravity="center"
                         android:background="@drawable/bg_border_line_right"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/tv_cx_bz"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="10"
-                        android:hint="@string/qsr"
                         android:textColor="@color/light_black"
                         android:textSize="26px"
                         android:maxLines="4"
@@ -374,7 +371,8 @@
                     android:layout_height="78px"
                     android:orientation="horizontal"
                     android:paddingBottom="2px"
-                    android:background="@drawable/bg_border_line_bottom">
+                    android:background="@drawable/bg_border_line_bottom"
+                    >
 
                     <!--结论-->
                     <TextView
@@ -389,35 +387,19 @@
                         android:background="@drawable/bg_border_line_right"/>
 
                     <!--合格和不合格-->
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_cx_state"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="10"
-                        android:orientation="horizontal"
-                        android:gravity="center">
-
-                        <RadioGroup
-                            android:id="@+id/jl_rg"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            >
-
-                            <RadioButton
-                                android:id="@+id/wc_rb"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/over"
-                                android:checked="true"/>
-
-                            <RadioButton
-                                android:id="@+id/wwc_rb"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/wwc"
-                                android:layout_marginLeft="100px"/>
-                        </RadioGroup>
-                    </LinearLayout>
+                        android:textColor="@color/light_black"
+                        android:textSize="26px"
+                        android:maxLines="4"
+                        android:ellipsize="end"
+                        android:gravity="left|center_vertical"
+                        android:paddingLeft="20px"
+                        android:background="@null"
+                        />
                 </LinearLayout>
                     <!--查修人-->
                 <LinearLayout
@@ -451,6 +433,39 @@
                         android:paddingLeft="20px"
                         />
                 </LinearLayout>
+
+                    <!--查修时间-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="78px"
+                        android:orientation="horizontal"
+                        android:paddingBottom="2px"
+                        android:background="@drawable/bg_border_line_bottom">
+
+                        <!--用户地址-->
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:text="查修时间"
+                            android:textColor="@color/high_blue"
+                            android:textSize="26px"
+                            android:singleLine="true"
+                            android:gravity="center"
+                            android:background="@drawable/bg_border_line_right"/>
+
+                        <TextView
+                            android:id="@+id/tv_cx_time"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="10"
+                            android:textColor="@color/light_black"
+                            android:textSize="26px"
+                            android:singleLine="true"
+                            android:gravity="right|center_vertical"
+                            android:paddingRight="20px"
+                            />
+                    </LinearLayout>
                     <!--用户签名部分-->
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -523,7 +538,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="102px"
                             android:orientation="horizontal"
-                            android:gravity="right|center_vertical">
+                            android:gravity="right|center_vertical"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/tv_submit"
