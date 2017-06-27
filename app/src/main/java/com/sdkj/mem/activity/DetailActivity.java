@@ -224,12 +224,12 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == mWC.getId()){
-                    ToastUtil.toast(context,mWC.getText().toString());
+//                    ToastUtil.toast(context,mWC.getText().toString());
                     record.setState("1");
 //                    seletedTv.setText(defaultStr + manRb.getText().toString());
                 }else if(checkedId == mWWC.getId()){
                     record.setState("3");
-                    ToastUtil.toast(context,mWWC.getText().toString());
+//                    ToastUtil.toast(context,mWWC.getText().toString());
                 }
             }
         });
@@ -239,6 +239,10 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
         mPhoneModel.addTextChangedListener(textChange);
         mPhonePart.addTextChangedListener(textChange);
         mBZ.addTextChangedListener(textChange);
+
+        mPhoneModel.setSelection(mPhoneModel.getText().toString().length());//光标在最后位置
+        mPhonePart.setSelection(mPhonePart.getText().toString().length());//光标在最后位置
+        mBZ.setSelection(mBZ.getText().toString().length());//光标在最后位置
     }
 
 
@@ -324,22 +328,27 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
      */
     @Override
     public void onSuccess(final String filePath) {
+        final int photoDegree = NativeUtil.readPictureDegree(filePath);
         File file = new File(filePath);
         if (file.exists()) {
+            showLoading("正在压缩图片...");
             new Thread(){
                 public void run() {
                     final File file2 = new File(externalStorageDirectory+"/temp.jpg");
 
-                    NativeUtil.compressBitmap(BitmapFactory.decodeFile(filePath),file2.getPath());
+//                    NativeUtil.compressBitmap(BitmapFactory.decodeFile(filePath),file2.getPath());
+
+                    NativeUtil.compressBitmap(BitmapFactory.decodeFile(filePath),file2.getPath(),photoDegree);
 
                     DetailActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             imageUri = file2.getPath();
-//                            imageLoader.displayImage(imageUri,mPhoto,options);
+//                            imageLoader.displayImage("file://"+imageUri,mPhoto,options);//有缓存，不能实时刷新
 
                             ViewUtil.showCurrentView(mPhotoDel);
                             mPhoto.setImageBitmap(NativeUtil.getBitmapFromFile(file2.getPath()));
+                            dismissLoading();
                         }
                     });
                 }
@@ -391,7 +400,7 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
                     break;
                 case R.id.iv_photo:
                     //点击拍照按钮
-                    if(!TextUtils.isEmpty(imageUri) || !TextUtils.isEmpty(record.getImgRes())){
+                    if(!TextUtils.isEmpty(imageUri) || mPhotoDel.getVisibility() == View.VISIBLE){
                         //在ImageShowActivity中显示图片
                         intent = new Intent(context,ImageShowActivity.class);
                         intent.putExtra("imageUri", imageUri);
@@ -493,10 +502,10 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
 
     //提交数据
     public void gotoSubmit(){
-        showLoading();
+        showLoading("正在提交数据");
         if(!TextUtils.isEmpty(imageUri)){
             record.setImgRes(BitmapUtils.bitmapToBase64(NativeUtil.getBitmapFromFile(imageUri)));
-        }else if(!TextUtils.isEmpty(baseImg)){
+        }else{
             record.setImgRes(baseImg);
         }
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -504,15 +513,37 @@ public class DetailActivity extends BaseActivity implements CameraCore.CameraRes
         record.setCxTime(today);
         Gson gson = new Gson();
         String jsonString = gson.toJson(record);
-        boolean isOk =  FileSizeUtil.saveUserInfo(record, "wq.json");
-        if(isOk){
-            ToastUtil.toast(context,"数据提交成功");
-            Intent intent = new Intent();
-            setResult(Constant.RESPONSE_OK,intent);
-            finish();
-        }else{
-            dismissLoading();
-            ToastUtil.toast(context,"数据提交失败");
-        }
+        new Thread(){
+            @Override
+            public void run() {
+                final boolean isOk =  FileSizeUtil.saveUserInfo(record, "wq.json");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(isOk){
+                            dismissLoading();
+                            ToastUtil.toast(context,"数据提交成功");
+                            Intent intent = new Intent();
+                            setResult(Constant.RESPONSE_OK,intent);
+                            finish();
+                        }else{
+                            dismissLoading();
+                            ToastUtil.toast(context,"数据提交失败");
+                        }
+                    }
+                });
+
+            }
+        }.start();
+//        boolean isOk =  FileSizeUtil.saveUserInfo(record, "wq.json");
+//        if(isOk){
+//            ToastUtil.toast(context,"数据提交成功");
+//            Intent intent = new Intent();
+//            setResult(Constant.RESPONSE_OK,intent);
+//            finish();
+//        }else{
+//            dismissLoading();
+//            ToastUtil.toast(context,"数据提交失败");
+//        }
     }
 }

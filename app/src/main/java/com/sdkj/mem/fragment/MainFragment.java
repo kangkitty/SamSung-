@@ -135,12 +135,23 @@ public class MainFragment extends Fragment{
 
 		}
 
-		if(okDatas.size() > 0){
-			mMultipleStatusView.showContent();
-			mAdapter.notifyDataSetChanged();
-		}else{
-			mMultipleStatusView.showEmpty();
-		}
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if(okDatas.size() > 0){
+					mMultipleStatusView.showContent();
+					mAdapter.notifyDataSetChanged();
+				}else{
+					mMultipleStatusView.showEmpty();
+				}
+			}
+		});
+//		if(okDatas.size() > 0){
+//			mMultipleStatusView.showContent();
+//			mAdapter.notifyDataSetChanged();
+//		}else{
+//			mMultipleStatusView.showEmpty();
+//		}
 
 	}
 

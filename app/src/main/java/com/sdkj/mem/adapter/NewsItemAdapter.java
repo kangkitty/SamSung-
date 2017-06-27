@@ -103,6 +103,7 @@ public class NewsItemAdapter extends BaseAdapter
 			holder.mName = (TextView) convertView.findViewById(R.id.tv_user_name);
 			holder.mEffect = (TextView) convertView.findViewById(R.id.tv_effect);
 			holder.mAddress = (TextView) convertView.findViewById(R.id.tv_user_add);
+			holder.mPhone = (TextView) convertView.findViewById(R.id.tv_phone);
 			holder.sbTime = (TextView) convertView.findViewById(R.id.tv_time);
 			holder.goCheck = (TextView) convertView.findViewById(R.id.tv_goCheck);
 			holder.itemZone =  convertView.findViewById(R.id.ll_item_zone);
@@ -113,10 +114,11 @@ public class NewsItemAdapter extends BaseAdapter
 			holder = (ViewHolder) convertView.getTag();
 		}
 		final CheckRecord record = mDatas.get(position);
-		holder.mName.setText(record.getUserName());
+		holder.mName.setText(record.getCxUserName());
 		holder.mEffect.setText(record.getEffect());
 		holder.mAddress.setText(record.getAddress());
 		holder.sbTime.setText(record.getSbTime());
+		holder.mPhone.setText(record.getUserTel());
 
 		if(record.getState().equals("1")){
 			//已完成
@@ -159,7 +161,7 @@ public class NewsItemAdapter extends BaseAdapter
 	private final class ViewHolder
 	{
 		View itemZone;
-		TextView mName,mEffect,mAddress;
+		TextView mName,mEffect,mAddress,mPhone;
 		TextView sbTime;
 		TextView goCheck;
 		TextView mDate;

@@ -14,7 +14,7 @@ import com.zhy.autolayout.AutoLayoutActivity;
  *
  * @author KittyKang
  */
-public abstract  class BaseActivity  extends FragmentActivity {
+public abstract  class BaseActivity  extends AutoLayoutActivity {
 
 
     /**
@@ -26,13 +26,13 @@ public abstract  class BaseActivity  extends FragmentActivity {
 
     private ProgressDialog dialog;
 
-    public void showLoading() {
+    public void showLoading(String msg) {
         if (dialog != null && dialog.isShowing()) return;
         dialog = new ProgressDialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("正在解析数据...");
+        dialog.setMessage(msg);
         dialog.show();
     }
 

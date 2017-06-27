@@ -22,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import com.sdkj.mem.adapter.TabAdapter;
 import com.sdkj.mem.bean.CheckRecord;
 import com.sdkj.mem.listener.MyClickListener;
+import com.sdkj.mem.utils.ButtonUtils;
 import com.sdkj.mem.utils.Constant;
 import com.sdkj.mem.utils.FileSizeUtil;
 import com.sdkj.mem.utils.LogUtils;
@@ -61,7 +62,7 @@ public class MainActivity extends BaseActivity {
 
     private Handler handler = new Handler(){
 
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
 
 //			if(msg.what==0x11){
 //				updateViews();
@@ -71,10 +72,10 @@ public class MainActivity extends BaseActivity {
 
                 case Constant.DATA_OK:
                     //导入数据成功
-                    dismissLoading();
                     mAdapter = new TabAdapter(getSupportFragmentManager(),mDataList,mRecords);
                     mViewPager.setAdapter(mAdapter);
                     initMagicIndicator();
+                    dismissLoading();
                     break;
 
                 case Constant.CHECK_DARA:
@@ -113,7 +114,7 @@ public class MainActivity extends BaseActivity {
         }
 //        ScreenUtil.getScreenDetail(this);
         mRead.setOnClickListener(mListener);
-        showLoading();
+        showLoading("正在解析数据...");
         new Thread(){
             @Override
             public void run() {
@@ -250,13 +251,18 @@ public class MainActivity extends BaseActivity {
         public void onViewClick(View v) {
             switch (v.getId()){
                 case R.id.tv_read:
-                    showLoading();
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            initDatas();
-                        }
-                    }.start();
+                    if (!ButtonUtils.isFastDoubleClick(v.getId())) {
+                        showLoading("正在解析数据");
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                initDatas();
+                            }
+                        }.start();
+                    }else{
+                        ToastUtil.toast(context, "点太快了，要给点反应时间呀");
+                    }
+
                     break;
             }
         }
@@ -268,7 +274,7 @@ public class MainActivity extends BaseActivity {
         if(requestCode == Constant.REQUEST_OK && resultCode == Constant.RESPONSE_OK){
 
             //更新数据
-            showLoading();
+            showLoading("正在解析数据...");
             new Thread(){
                 @Override
                 public void run() {

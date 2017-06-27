@@ -72,6 +72,7 @@ public class TaskDetailActivity extends BaseActivity{
     //显示View
     private TextView mName,mPhone,mAddress,mEffect,mPXTime,mTestName,mTestResult,mCXName,mCXTime;
     private TextView mPhoneModel,mPhonePart,mBZ;
+    private TextView mBack;
 
     //待填写View
     private ImageView mPhoto;//拍照
@@ -112,6 +113,7 @@ public class TaskDetailActivity extends BaseActivity{
         mPhoneModel = (TextView) findViewById(R.id.et_hj_type);
         mPhonePart = (TextView) findViewById(R.id.et_fxh);
         mBZ = (TextView) findViewById(R.id.tv_cx_bz);
+        mBack = (TextView) findViewById(R.id.tv_submit);
     }
 
     public void initDatas(){
@@ -182,6 +184,7 @@ public class TaskDetailActivity extends BaseActivity{
 
     public void initEvents(){
         mPhoto.setOnClickListener(mListener);
+        mBack.setOnClickListener(mListener);
 
     }
 
@@ -231,6 +234,11 @@ public class TaskDetailActivity extends BaseActivity{
                         startActivity(intent);
 
                     }
+                    break;
+
+                case R.id.tv_submit:
+                    //点击返回按钮
+                    finish();
                     break;
             }
         }

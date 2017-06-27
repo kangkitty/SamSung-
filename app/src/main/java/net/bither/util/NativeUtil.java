@@ -71,13 +71,14 @@ public class NativeUtil {
 	 * @date 2016年3月23日 下午6:28:15
 	 * @version V1.0.0
 	 */
-	public static void compressBitmap(Bitmap image, String filePath) {
+	public static void compressBitmap(Bitmap image, String filePath,int degree) {
 		// 最大图片大小 100KB
 		int maxSize = 100;
 		// 获取尺寸压缩倍数
 		int ratio = NativeUtil.getRatioSize(image.getWidth(), image.getHeight());
 		// 压缩Bitmap到对应尺寸
 		Bitmap result = Bitmap.createBitmap(image.getWidth() / ratio, image.getHeight() / ratio, Config.ARGB_8888);
+		//旋转图片
 		Canvas canvas = new Canvas(result);
 		Rect rect = new Rect(0, 0, image.getWidth() / ratio, image.getHeight() / ratio);
 		canvas.drawBitmap(image, null, rect, null);
@@ -95,6 +96,12 @@ public class NativeUtil {
 			// 这里压缩options%，把压缩后的数据存放到baos中
 			result.compress(Bitmap.CompressFormat.JPEG, options, baos);
 		}
+		int photoDegree = degree;
+		Matrix matrix = new Matrix();
+		matrix.postRotate(photoDegree);
+		// 创建新的图片
+		result = Bitmap.createBitmap(result, 0, 0,
+				image.getWidth() / ratio, image.getHeight() / ratio, matrix, true);
 		// JNI保存图片到SD卡 这个关键
 		NativeUtil.saveBitmap(result, options, filePath, true);
 //		NativeUtil.saveBitmap(result, options, filePath, false);
@@ -120,6 +127,9 @@ public class NativeUtil {
 	 */
 	public static int getRatioSize(int bitWidth, int bitHeight) {
 		// 图片最大分辨率
+//		int imageHeight = 1280;
+//		int imageWidth = 960;
+
 		int imageHeight = 1280;
 		int imageWidth = 960;
 		// 缩放比
@@ -181,6 +191,8 @@ public class NativeUtil {
 		BitmapFactory.decodeFile(filePath, newOpts);
 		int w = newOpts.outWidth;
 		int h = newOpts.outHeight;
+
+
 		// 获取尺寸压缩倍数
 		newOpts.inSampleSize = NativeUtil.getRatioSize(w,h);
 		newOpts.inJustDecodeBounds = false;//读取所有内容

@@ -9,12 +9,14 @@ import com.sdkj.mem.bean.CheckRecord;
 import com.sdkj.mem.fragment.MainFragment;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TabAdapter extends FragmentPagerAdapter implements Serializable {
 
 	private List<String> mDataList;
 	private List<CheckRecord> records;
+	private String[] tagList = new String[3];
 	public TabAdapter(FragmentManager fm,List<String> dataList,List<CheckRecord> records)
 	{
 		super(fm);
@@ -42,4 +44,13 @@ public class TabAdapter extends FragmentPagerAdapter implements Serializable {
 	}
 
 
+	@Override
+	public Object instantiateItem(ViewGroup container, int position) {
+		tagList[position] = makeFragmentName(container.getId(), (int) getItemId(position));
+		return super.instantiateItem(container, position);
+	}
+
+	public static String makeFragmentName(int viewId, int index) {
+		return "android:switcher:" + viewId + ":" + index;
+	}
 }
