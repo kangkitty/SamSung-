@@ -1,0 +1,5 @@
+签名文件：membermanagement.jks
+keyAlias 'sx_pad'
+keyPassword 'sdkjkittykang'
+storeFile file('membermanagement.jks')
+storePassword 'sdkjkittykang'

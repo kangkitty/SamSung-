@@ -21,4 +21,5 @@
     <color name="light_black">#666666</color>
     <color name="high_green">#5cb2b9</color>
     <color name="trans_high_green">#885cb2b9</color>
+    <color name="high_red">#66df0000</color>
 </resources>

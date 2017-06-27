@@ -1,5 +1,6 @@
 package com.sdkj.mem;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -29,6 +31,10 @@ import com.sdkj.mem.utils.LogUtils;
 import com.sdkj.mem.utils.ScreenUtil;
 import com.sdkj.mem.utils.StringEmpty;
 import com.sdkj.mem.utils.ToastUtil;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionListener;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RationaleListener;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -47,9 +53,14 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements PermissionListener{
 
     public static final String TAG = "MainActivity";
+
+    private static final int REQUEST_CODE_PERMISSION_SD = 100;
+    private static final int REQUEST_CODE_PERMISSION_OTHER = 101;
+
+    private static final int REQUEST_CODE_SETTING = 300;
     private Context context;
     private static final String[] CHANNELS = new String[]{"待办", "未完成", "完成"};
     private List<String> mDataList = Arrays.asList(CHANNELS);
@@ -100,6 +111,19 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.context = this;
+        // 申请单个权限。
+        AndPermission.with(this)
+                .requestCode(REQUEST_CODE_PERMISSION_OTHER)
+                .permission(Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                .rationale(new RationaleListener() {
+                    @Override
+                    public void showRequestPermissionRationale(int requestCode, Rationale rationale) {
+                        AndPermission.rationaleDialog(MainActivity.this, rationale).show();
+                    }
+                })
+                .send();
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mRead = (TextView) findViewById(R.id.tv_read);
 //        initDatas();
@@ -114,6 +138,9 @@ public class MainActivity extends BaseActivity {
         }
 //        ScreenUtil.getScreenDetail(this);
         mRead.setOnClickListener(mListener);
+
+if(AndPermission.hasPermission(context,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA)){
+
         showLoading("正在解析数据...");
         new Thread(){
             @Override
@@ -121,6 +148,7 @@ public class MainActivity extends BaseActivity {
                 initDatas();
             }
         }.start();
+}
 
     }
 
@@ -281,6 +309,14 @@ public class MainActivity extends BaseActivity {
                     initDatas();
                 }
             }.start();
+        }else if(requestCode == REQUEST_CODE_SETTING){
+            showLoading("正在解析数据...");
+            new Thread(){
+                @Override
+                public void run() {
+                    initDatas();
+                }
+            }.start();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -314,4 +350,63 @@ public class MainActivity extends BaseActivity {
         super.onSaveInstanceState(outState, outPersistentState);
         outState.putSerializable("select", mAdapter);
     }
+
+    //----------------------------------权限回调处理----------------------------------//
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[]
+            grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        /**
+         * 转给AndPermission分析结果。
+         *
+         * @param requestCode  请求码。
+         * @param permissions  权限数组，一个或者多个。
+         * @param grantResults 请求结果。
+         * @param listener PermissionListener 对象。
+         */
+        AndPermission.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onSucceed(int requestCode, List<String> grantPermissions) {
+        if(requestCode == REQUEST_CODE_PERMISSION_OTHER){
+            showLoading("正在解析数据...");
+            new Thread(){
+                @Override
+                public void run() {
+                    initDatas();
+                }
+            }.start();
+
+        }
+    }
+
+    @Override
+    public void onFailed(int requestCode, List<String> deniedPermissions) {
+        dismissLoading();
+        switch (requestCode) {
+            case REQUEST_CODE_PERMISSION_OTHER: {
+                Toast.makeText(this, "权限申请失败", Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
+
+        // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
+        if (AndPermission.hasAlwaysDeniedPermission(this, deniedPermissions)) {
+            // 第一种：用默认的提示语。
+//            AndPermission.defaultSettingDialog(this, REQUEST_CODE_SETTING).show();
+
+            // 第二种：用自定义的提示语。
+            AndPermission.defaultSettingDialog(this, REQUEST_CODE_SETTING)
+                    .setTitle("权限申请失败")
+                    .setMessage("我们需要的一些权限被您拒绝或者系统发生错误申请失败，请您到设置页面手动授权，否则功能无法正常使用！")
+                    .setPositiveButton("好，去设置")
+                    .show();
+
+
+        }
+    }
+
+
 }

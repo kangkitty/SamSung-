@@ -18,4 +18,5 @@
     <string name="submit">提交</string>
     <string name="over">完成</string>
     <string name="wwc">未完成</string>
+    <string name="cxr">查修人</string>
 </resources>

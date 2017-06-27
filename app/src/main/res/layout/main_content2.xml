@@ -38,7 +38,7 @@
             android:gravity="center"/>
 
         <TextView
-            android:layout_width="278px"
+            android:layout_width="412px"
             android:layout_height="match_parent"
             android:text="@string/address"
             android:textSize="26px"
@@ -46,14 +46,6 @@
             android:singleLine="true"
             android:gravity="center"/>
 
-        <TextView
-            android:layout_width="144px"
-            android:layout_height="match_parent"
-            android:text="@string/phone"
-            android:textSize="26px"
-            android:textColor="@color/white"
-            android:singleLine="true"
-            android:gravity="center"/>
         <TextView
             android:layout_width="144px"
             android:layout_height="match_parent"

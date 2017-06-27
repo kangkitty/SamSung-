@@ -102,7 +102,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="4"
                             android:hint="@string/hint_text"
-                            android:textColor="@color/light_black"
+                            android:textColor="@color/high_red"
                             android:textSize="26px"
                             android:singleLine="true"
                             android:gravity="left|center_vertical"
@@ -160,7 +160,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="4"
                             android:hint="@string/hint_text"
-                            android:textColor="@color/light_black"
+                            android:textColor="@color/high_red"
                             android:textSize="26px"
                             android:singleLine="true"
                             android:gravity="left|center_vertical"
@@ -205,7 +205,8 @@
                     <!--故障现象-->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="78px"
+                        android:layout_height="wrap_content"
+                        android:minHeight="78px"
                         android:orientation="horizontal"
                         android:paddingBottom="2px"
                         android:background="@drawable/bg_border_line_bottom">
@@ -218,7 +219,6 @@
                             android:text="@string/effect"
                             android:textColor="@color/high_blue"
                             android:textSize="26px"
-                            android:singleLine="true"
                             android:gravity="center"
                             android:background="@drawable/bg_border_line_right"/>
 
@@ -229,7 +229,6 @@
                             android:layout_weight="10"
                             android:textColor="@color/light_black"
                             android:textSize="26px"
-                            android:singleLine="true"
                             android:gravity="left|center_vertical"
                             android:paddingLeft="20px"
                             />
@@ -359,7 +358,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="10"
                         android:hint="@string/qsr"
-                        android:textColor="@color/light_black"
+                        android:textColor="@color/high_red"
                         android:textSize="26px"
                         android:maxLines="4"
                         android:ellipsize="end"
